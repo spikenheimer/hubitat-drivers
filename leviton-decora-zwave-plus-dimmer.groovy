@@ -145,47 +145,39 @@ metadata {
     }
 
     preferences {
-        input name: "levelIncrement", type: "number", title: "In-App Level Increment",
+        input name: "levelIncrement", type: "number", title: "<b>In-App Level Increment</b>",
                 description: "1 - 100 (default $defaultLevelIncrement)", range: "1..100", defaultValue: defaultLevelIncrement,
                 displayDuringSetup: false, required: false
 
-        input type: "paragraph", element: "paragraph", title: "Device Preferences",
+        input type: "paragraph", element: "paragraph", title: "<b>Device Preferences</b>",
                 description: "The following preferences are configuring the device behaviors. " +
-                        "All of them are optional. Leave a preference empty to skip configuring it."
+                        "<br>All of them are optional. Leave a preference empty to skip configuring it."
 
-        input name: "loadType", type: "enum", title: "Load type",
+        input name: "loadType", type: "enum", title: "<b>Load type</b>",
                 options: ["Incandescent (default)", "LED", "CFL"],
                 displayDuringSetup: false, required: false
-        input name: "indicatorStatus", type: "enum", title: "Indicator LED is lit",
+        input name: "indicatorStatus", type: "enum", title: "<b>Indicator LED is lit</b>",
                 options: ["When switch is off (default)", "When switch is on", "Never"],
                 displayDuringSetup: false, required: false
-        input name: "presetLevel", type: "number", title: "Light turns on to level",
-                description: "0 to 100 (default 0)", range: "0..100",
+        input name: "presetLevel", type: "number", title: "<b>Light turns on to level</b>",
+                description: "0 to 100 (default 0) <br> "+"0 = last dim level (default)<br> 1 - 100 = fixed level", range: "0..100",
                 displayDuringSetup: false, required: false
-        input type: "paragraph", element: "paragraph", title: "",
-                description: "0 = last dim level (default)\n1 - 100 = fixed level"
-        input name: "minLevel", type: "number", title: "Minimum light level",
+        input name: "minLevel", type: "number", title: "<b>Minimum light level</b>",
                 description: "0 to 100 (default 10)", range: "0..100",
                 displayDuringSetup: false, required: false
-        input name: "maxLevel", type: "number", title: "Maximum light level",
+        input name: "maxLevel", type: "number", title: "<b>Maximum light level</b>",
                 description: "0 to 100 (default 100)", range: "0..100",
                 displayDuringSetup: false, required: false
-        input name: "fadeOnTime", type: "number", title: "Fade-on time",
-                description: "0 to 253 (default 2)", range: "0..253",
+        input name: "fadeOnTime", type: "number", title: "<b>Fade-on time</b>",
+                description: "0 to 253 (default 2)"+"0 = instant on<br> 1 - 127 = 1 - 127 seconds (default 2)<br> 128 - 253 = 1 - 126 minutes" , range: "0..253",
                 displayDuringSetup: false, required: false
-        input type: "paragraph", element: "paragraph", title: "",
-                description: "0 = instant on\n1 - 127 = 1 - 127 seconds (default 2)\n128 - 253 = 1 - 126 minutes"
-        input name: "fadeOffTime", type: "number", title: "Fade-off time",
-                description: "0 to 253 (default 2)", range: "0..253",
+        input name: "fadeOffTime", type: "number", title: "<b>Fade-off time</b>",
+                description: "0 to 253 (default 2)<br> "+"0 = instant off<br> 1 - 127 = 1 - 127 seconds (default 2)<br> 128 - 253 = 1 - 126 minutes", range: "0..253",
                 displayDuringSetup: false, required: false
-        input type: "paragraph", element: "paragraph", title: "",
-                description: "0 = instant off\n1 - 127 = 1 - 127 seconds (default 2)\n128 - 253 = 1 - 126 minutes"
-        input name: "levelIndicatorTimeout", type: "number", title: "Dim level indicator timeout",
-                description: "0 to 255 (default 3)", range: "0..255",
+        input name: "levelIndicatorTimeout", type: "number", title: "<b>Dim level indicator timeout</b>",
+                description: "0 to 255 (default 3)<br> "+"0 = dim level indicator off<br> 1 - 254 = timeout in seconds (default 3)<br> 255 = dim level indicator always on", range: "0..255",
                 displayDuringSetup: false, required: false
-        input type: "paragraph", element: "paragraph", title: "",
-                description: "0 = dim level indicator off\n1 - 254 = timeout in seconds (default 3)\n255 = dim level indicator always on"
-		input name: "debuglog", type: "bool", title: "Enable debug logging", defaultValue: false
+		input name: "debuglog", type: "bool", title: "<b>Enable debug logging</b>", defaultValue: false
 
     }
 }
@@ -286,10 +278,12 @@ def setLevel(value, durationSeconds = null) {
 }
 
 def poll() {
+	log.debug "in poll()"
     delayBetween(statusCommands, commandDelayMs)
 }
 
 def ping() {
+	log.debug "in ping()"
     poll()
 }
 
