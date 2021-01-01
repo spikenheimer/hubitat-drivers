@@ -183,7 +183,7 @@ metadata {
 }
 
 def installed() {
-	log.info "installed..."
+	log.info "${device.getLabel()} installed..."
     initialize()
     response(refresh())
 }
@@ -298,6 +298,7 @@ def refresh() {
         commands << zwave.configurationV1.configurationGet(parameterNumber: i).format()
     }
     if (debuglog) log.debug "Refreshing with commands $commands"
+	log.info "${device.getLabel()} in Refresh()"
     delayBetween(commands, commandDelayMs)
 }
 
@@ -426,7 +427,8 @@ private zwaveEvent(hubitat.zwave.commands.hailv1.Hail cmd) {
 }
 
 private zwaveEvent(hubitat.zwave.commands.versionv1.VersionReport cmd) {
-    createEvent(name: "firmwareVersion", value: "${cmd.applicationVersion}.${cmd.applicationSubVersion}", displayed: false)
+	log.info "${device.getLabel()} firmwareVersion is:  ${cmd.firmware0Version}.${cmd.firmware0SubVersion}"
+    createEvent(name: "firmwareVersion", value: "${cmd.firmware0Version}.${cmd.firmware0SubVersion}", displayed: false)
 }
 
 private zwaveEvent(hubitat.zwave.Command cmd) {
